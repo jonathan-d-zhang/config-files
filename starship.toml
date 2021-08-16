@@ -1,0 +1,69 @@
+# Git
+[git_branch]
+symbol = " "
+
+# Environment
+[conda]
+symbol = " "
+
+[directory]
+read_only = " "
+
+[docker_context]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[package]
+disabled = true
+
+# Misc
+[memory_usage]
+symbol = " "
+
+# Languages
+[aws]
+symbol = "  "
+
+[dart]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[swift]
+symbol = "ﯣ "

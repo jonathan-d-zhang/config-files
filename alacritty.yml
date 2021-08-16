@@ -1,0 +1,15 @@
+window:
+  dimensions:
+    columns: 100
+    lines: 25
+
+background_opacity: 0.85
+
+shell:
+  program: fish
+
+working_directory: /home/jonathan
+
+font:
+  normal:
+    family: FiraCode Nerd Font Mono
