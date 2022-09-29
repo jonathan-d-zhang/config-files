@@ -24,6 +24,7 @@ symbol = " "
 
 # Languages
 [aws]
+disabled = true
 symbol = "  "
 
 [dart]

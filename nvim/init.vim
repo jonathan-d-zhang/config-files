@@ -10,14 +10,95 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 
 """ Settings
 """" Leader
-noremap , <Nop>
-let mapleader = ','
+let mapleader = ' '
 
+"""" Plugins
+""" nerdtree
+noremap <leader>nt :NERDTree<CR>
+
+
+""" vim-monokai-pro
+set termguicolors
+colorscheme monokai_pro
+hi Normal guibg=#222222
+hi WhiteSpace guifg=white guibg=#2b2b2b
+hi SpecialKey guibg=#222222
+hi NonText guibg=#222222
+hi EndOfBuffer guibg=#222222
+hi SignColumn guibg=#191919
+hi LineNr guibg=#191919 guifg=#43454a
+hi WinSeparator guibg=#222222 guifg=#222222
+hi MsgArea guibg=#191919
+
+" Comments are a mild fuschia
+hi Comment guifg=#b04fc6
+
+set cursorline " Highlight current line
+hi CursorLine guibg=#2b2b2b
+
+""" vim-airline
+let g:airline_theme='badwolf'
+let g:airline_section_z = "%p%% \u2630 %l/%L \u33d1:%v"
+
+""" coc.nvim
+" Use <c-space> to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Make <CR> auto-select the first choice and notify coc.nvim to format on
+" enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use tab to trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? pumnext(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? pumprev(1) : "\<C-h>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
 """" Mouse, Keyboard, Terminal
 set mouse=nv                " Allow mouse use in normal and visual mode.
 set timeoutlen=2000         " Wait 2 seconds before timing out a mapping
@@ -28,7 +109,7 @@ set title                   " Turn on titlebar support
 
 "  Titlebar string: hostname> ${PWD:s/^$HOME/~} || (view|vim) filename ([+]|)
 let &titlestring  = hostname() . '> ' . '%{expand("%:p:~:h")}'
-                \ . ' || %{&ft=~"^man"?"man":&ro?"view":"vim"} %f %m'
+                \ . ' || %{&ft=~"^man"?"man":&ro?"view":"nvim"} %f %m'
 
 """" Moving Around/Editing
 set whichwrap=b,s,h,l,<,>   " <BS> <Space> h l <Left> <Right> can change lines
@@ -56,16 +137,16 @@ endfunction
 command -nargs=1 Vbuf call VerticalSplitBuffer(<f-args>)
 
 " Map <leader>b[,.] to switch between open buffers
-nnoremap <silent> <leader>b, :bn<CR>
-nnoremap <silent> <leader>b. :bp<CR>
+nnoremap <silent> <leader>bh :bn<CR>
+nnoremap <silent> <leader>bl :bp<CR>
 
 " Map <leader>w[hl] to switch between windows
 nnoremap <silent> <leader>wh <C-w>h
-nnoremap <silent> <leader>wi <C-w>l
+nnoremap <silent> <leader>wl <C-w>l
 
 " Map <leader>t[,.] to switch between tabs
-nnoremap <leader>t, :tabp<CR>
-nnoremap <leader>t. :tabn<CR>
+nnoremap <leader>th :tabp<CR>
+nnoremap <leader>tl :tabn<CR>
 
 """" Insert completion
 set completeopt=menuone     " Show the completion menu even if only one choice
@@ -101,9 +182,6 @@ set report=0                " : commands always print changed line count.
 set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
 set shortmess+=I            " Don't care about Ugandan children
 
-" vim-airline
-let g:airline_theme='badwolf'
-let g:airline_section_z = "%p%% \u2630 %l/%L \u33d1:%v"
 
 """" Tabs/Indent Levels
 set tabstop=8               " Real tab characters are 8 spaces wide,
@@ -140,52 +218,43 @@ filetype indent on          " use filetype-specific indenting where available,
 filetype plugin on          " also allow for filetype-specific plugins,
 syntax on                   " and turn on per-filetype syntax highlighting.
 
-""" Theme
-set termguicolors
-colorscheme monokai_pro
+""" Toggle Comment Command
+"let current_ft = &ft
+"noremap f
 
-""" Completion Config
-" Use <c-space> to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-" Make <CR> auto-select the first choice and notify coc.nvim to format on
-" enter
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 """" Colemak bindings
-noremap f e
-noremap F E
-noremap p r
-noremap P R
-noremap g t
-noremap G T
-noremap j y
-noremap J Y
-noremap l u
-noremap L U
-noremap u i
-noremap U I
-noremap y o
-noremap Y O
-noremap ; p
-noremap : P
-noremap r s
-noremap R S
-noremap s d
-noremap S D
-noremap t f
-noremap T F
-noremap d g
-noremap D G
-noremap n j
-noremap N J
-noremap e k
-noremap E K
-noremap i l
-noremap I L
-noremap o ;
-noremap O :
-noremap k n
-noremap K N
+" noremap f e
+" noremap F E
+" noremap p r
+" noremap P R
+" noremap g t
+" noremap G T
+" noremap j y
+" noremap J Y
+" noremap l u
+" noremap L U
+" noremap u i
+" noremap U I
+" noremap y o
+" noremap Y O
+" noremap ; p
+" noremap : P
+" noremap r s
+" noremap R S
+" noremap s d
+" noremap S D
+" noremap t f
+" noremap T F
+" noremap d g
+" noremap D G
+" noremap n j
+" noremap N J
+" noremap e k
+" noremap E K
+" noremap i l
+" noremap I L
+" noremap o ;
+" noremap O :
+" noremap k n
+" noremap K N
