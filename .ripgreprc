@@ -1,0 +1,6 @@
+# Cap line length and show preview for long lines.
+--max-columns=100
+--max-columns-preview
+
+# Ignore case unless caps are used
+--smart-case
