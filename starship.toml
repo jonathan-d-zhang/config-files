@@ -66,10 +66,10 @@ format = '[\[$all_status$ahead_behind\] ]($style fg:#070707)'
 
 [git_metrics]
 disabled = false
+only_nonzero_diffs = false
 added_style = "bg:#FFF6A3 fg:#03AC13"
 deleted_style = "bg:#FFF6A3 fg:#B90E0A"
-format = '([\[](fg:#070707 bg:#FFF6A3)[+$added ]($added_style))([-$deleted]($deleted_style))[\] ](fg:#070707 bg:#FFF6A3)'
-
+format = '([\[](fg:#070707 bg:#FFF6A3)[+$added ]($added_style))([-$deleted]($deleted_style)[\] ](fg:#070707 bg:#FFF6A3))'
 
 
 #### Environment
