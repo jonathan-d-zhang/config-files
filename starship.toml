@@ -1,13 +1,91 @@
-# Git
-[git_branch]
-symbol = " "
+#### Colors
+## Current palette
+# Username,       Path,      Git Stuff,              Languages
+# Light Crimson,  Fawn,      Calamansi,              Granny Smith Apple
+# EA6C92,         F0A573,    FFF6A3,                 ABEDA1
 
-# Environment
+## Other palettes
+# Azureish White, Aero Blue, Light Goldenrod Yellow, Pale Pink
+# CCE1F2,         C6F8E5,    FBF7D5,                 F9DED7
+
+format = """
+[](#EA6C92)\
+$username\
+[](bg:#F0A573 fg:#EA6C92)\
+$directory\
+[](fg:#F0A573 bg:#FFF6A3)\
+$git_branch\
+$git_status\
+$git_metrics\
+[](fg:#FFF6A3 bg:#ABEDA1)\
+$c\
+$cmake\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$haskell\
+$java\
+$julia\
+$kotlin\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$purescript\
+$python\
+$raku\
+$rlang\
+$ruby\
+$rust\
+$scala\
+$swift\
+$zig\
+[ ](fg:#ABEDA1)\
+"""
+
+[character]
+success_symbol = "[λ](#36ff90) "
+error_symbol = "[Χ](bold bright-red) "
+
+#### Git
+# $branch $status [+$added -$deleted]
+[git_branch]
+symbol = ""
+style = "bg:#FFF6A3"
+format = '[ $symbol $branch ]($style fg:#070707)'
+
+[git_status]
+style = "bg:#FFF6A3"
+# git_metrics shows us if we've modified files already
+modified = ""
+format = '[\[$all_status$ahead_behind\] ]($style fg:#070707)'
+# Avoid slow git plugin with native Windows starship
+# windows_starship = "/mnt/c/"
+
+[git_metrics]
+disabled = false
+added_style = "bg:#FFF6A3 fg:#03AC13"
+deleted_style = "bg:#FFF6A3 fg:#B90E0A"
+format = '([\[](fg:#070707 bg:#FFF6A3)[+$added ]($added_style))([-$deleted]($deleted_style))[\] ](fg:#070707 bg:#FFF6A3)'
+
+
+
+#### Environment
+[aws]
+disabled = true
+symbol = "  "
+
 [conda]
 symbol = " "
 
 [directory]
+style = "bg:#F0A573"
+format = "[ $path ]($style fg:#070707)"
 read_only = " "
+truncation_length = 3
+truncation_symbol = "…/"
 
 [docker_context]
 symbol = " "
@@ -18,53 +96,95 @@ symbol = " "
 [package]
 disabled = true
 
+[username]
+show_always = true
+style_user = "bg:#EA6C92"
+style_root = "bg:#EA6C92"
+format = '[$user ]($style fg:#070707)'
+
+
+#### Languages
+[c]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[dart]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[elixir]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[elm]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[golang]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[java]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[julia]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[nim]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[perl]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[php]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[python]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[ruby]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[rust]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[scala]
+symbol = " "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
+[swift]
+symbol = "ﯣ "
+style = "bg:#ABEDA1"
+format = '[ $symbol ($version) ]($style fg:#070707)'
+
 # Misc
 [memory_usage]
 symbol = " "
 
-# Languages
-[aws]
-disabled = true
-symbol = "  "
-
-[dart]
-symbol = " "
-
-[elixir]
-symbol = " "
-
-[elm]
-symbol = " "
-
-[golang]
-symbol = " "
-
-[java]
-symbol = " "
-
-[julia]
-symbol = " "
-
-[nim]
-symbol = " "
-
-[perl]
-symbol = " "
-
-[php]
-symbol = " "
-
-[python]
-symbol = " "
-
-[ruby]
-symbol = " "
-
-[rust]
-symbol = " "
-
-[scala]
-symbol = " "
-
-[swift]
-symbol = "ﯣ "
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#9EB8FF"
+format = '[ $time ]($style fg:#070707)'
