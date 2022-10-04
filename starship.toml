@@ -9,15 +9,15 @@
 # CCE1F2,         C6F8E5,    FBF7D5,                 F9DED7
 
 format = """
-[](#EA6C92)\
+[\uE0B6](#EA6C92)\
 $username\
-[](bg:#F0A573 fg:#EA6C92)\
+[\uE0B0](bg:#F0A573 fg:#EA6C92)\
 $directory\
-[](fg:#F0A573 bg:#FFF6A3)\
+[\uE0B0](fg:#F0A573 bg:#FFF6A3)\
 $git_branch\
-$git_status\
 $git_metrics\
-[](fg:#FFF6A3 bg:#ABEDA1)\
+$git_status\
+[\uE0B0](fg:#FFF6A3 bg:#ABEDA1)\
 $c\
 $cmake\
 $dotnet\
@@ -42,7 +42,7 @@ $rust\
 $scala\
 $swift\
 $zig\
-[ ](fg:#ABEDA1)\
+[\uE0B0 ](fg:#ABEDA1)\
 """
 
 [character]
@@ -50,35 +50,36 @@ success_symbol = "[λ](#36ff90) "
 error_symbol = "[Χ](bold bright-red) "
 
 #### Git
-# $branch $status [+$added -$deleted]
+# $branch +$added -$deleted [$status]
 [git_branch]
 symbol = ""
 style = "bg:#FFF6A3"
-format = '[ $symbol $branch ]($style fg:#070707)'
+format = '[ $symbol $branch]($style fg:#070707)'
 
 [git_status]
-style = "bg:#FFF6A3"
-# git_metrics shows us if we've modified files already
-modified = ""
-format = '[\[$all_status$ahead_behind\] ]($style fg:#070707)'
-# Avoid slow git plugin with native Windows starship
+style = "bg:#FFF6A3 fg:#070707"
+modified = "" # git_metrics shows us if we've modified files already
+deleted = "X" # default char is too curvy
+format = '([ \[$all_status$ahead_behind\]]($style))'
+# Avoid slow git plugin with native Windows starship.rs
 # windows_starship = "/mnt/c/"
 
 [git_metrics]
 disabled = false
-only_nonzero_diffs = false
+# only_nonzero_diffs = false
 added_style = "bg:#FFF6A3 fg:#03AC13"
 deleted_style = "bg:#FFF6A3 fg:#B90E0A"
-format = '([\[](fg:#070707 bg:#FFF6A3)[+$added ]($added_style))([-$deleted]($deleted_style)[\] ](fg:#070707 bg:#FFF6A3))'
+# format = '([\[](fg:#070707 bg:#FFF6A3)[+$added ]($added_style)[-$deleted]($deleted_style)[\] ](fg:#070707 bg:#FFF6A3))'
+format = '([ +$added]($added_style)[ -$deleted]($deleted_style))'
 
 
 #### Environment
 [aws]
 disabled = true
-symbol = "  "
+symbol = ""
 
 [conda]
-symbol = " "
+symbol = ""
 
 [directory]
 style = "bg:#F0A573"
@@ -88,10 +89,10 @@ truncation_length = 3
 truncation_symbol = "…/"
 
 [docker_context]
-symbol = " "
+symbol = ""
 
 [nix_shell]
-symbol = " "
+symbol = ""
 
 [package]
 disabled = true
@@ -105,83 +106,83 @@ format = '[$user ]($style fg:#070707)'
 
 #### Languages
 [c]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [dart]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [elixir]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [elm]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [golang]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [java]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [julia]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [nim]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [perl]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [php]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [python]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [ruby]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [rust]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [scala]
-symbol = " "
+symbol = ""
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 [swift]
-symbol = "ﯣ "
+symbol = "ﯣ"
 style = "bg:#ABEDA1"
 format = '[ $symbol ($version) ]($style fg:#070707)'
 
 # Misc
 [memory_usage]
-symbol = " "
+symbol = ""
 
 [time]
 disabled = false

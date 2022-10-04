@@ -12,7 +12,6 @@ Plug 'preservim/nerdtree'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'mhinz/vim-startify'
 call plug#end()
 
 
@@ -161,7 +160,7 @@ set formatoptions+=1        " break before, not after, a 1 letter word
 set number                  " Display line numbers
 set relativenumber          " and relative line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
-"set signcolumn=number       " and drawing signs in the number column
+set signcolumn=number       " and drawing signs in the number column
 set display+=uhex           " Use <03> rather than ^C for non-printing chars
 set inccommand=nosplit      " Preview :s commands incrementally as you type
 
