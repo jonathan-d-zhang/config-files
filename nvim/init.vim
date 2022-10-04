@@ -39,7 +39,7 @@ hi MsgArea guibg=#191919
 
 " Comments are a mild fuschia
 hi Comment guifg=#b04fc6
-
+hi Comment guifg=#e234da
 set cursorline " Highlight current line
 hi CursorLine guibg=#2b2b2b
 

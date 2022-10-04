@@ -60,17 +60,17 @@ format = '[ $symbol $branch]($style fg:#070707)'
 style = "bg:#FFF6A3 fg:#070707"
 modified = "" # git_metrics shows us if we've modified files already
 deleted = "X" # default char is too curvy
-format = '([ \[$all_status$ahead_behind\]]($style))'
+format = '([ \[$all_status$ahead_behind\] ]($style))'
 # Avoid slow git plugin with native Windows starship.rs
 # windows_starship = "/mnt/c/"
 
 [git_metrics]
 disabled = false
-# only_nonzero_diffs = false
 added_style = "bg:#FFF6A3 fg:#03AC13"
 deleted_style = "bg:#FFF6A3 fg:#B90E0A"
 # format = '([\[](fg:#070707 bg:#FFF6A3)[+$added ]($added_style)[-$deleted]($deleted_style)[\] ](fg:#070707 bg:#FFF6A3))'
-format = '([ +$added]($added_style)[ -$deleted]($deleted_style))'
+# format = '(([ +$added]($added_style)[ -$deleted]($deleted_style))'
+format = "([ \\[](fg:#070707 bg:#FFF6A3)([+$added ]($added_style))([-$deleted ]($deleted_style))[\b\\]](fg:#070707 bg:#FFF6A3))"
 
 
 #### Environment
@@ -158,7 +158,7 @@ format = '[ $symbol ($version) ]($style fg:#070707)'
 [python]
 symbol = ""
 style = "bg:#ABEDA1"
-format = '[ $symbol ($version) ]($style fg:#070707)'
+format = '[ $symbol ($version) (\($virtualenv\)) ]($style fg:#070707)'
 
 [ruby]
 symbol = ""
