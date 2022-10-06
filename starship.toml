@@ -54,19 +54,19 @@ error_symbol = "[Χ](bold bright-red) "
 [git_branch]
 symbol = ""
 style = "bg:#FFF6A3"
-format = '[ $symbol $branch]($style fg:#070707)'
+format = '[ $symbol $branch ]($style fg:#070707)'
 
 [git_metrics]
 disabled = false
 added_style = "bg:#FFF6A3 fg:#03AC13"
 deleted_style = "bg:#FFF6A3 fg:#B90E0A"
-format = "([ \\[](fg:#070707 bg:#FFF6A3)([+$added ]($added_style))([-$deleted ]($deleted_style))[\b\\]](fg:#070707 bg:#FFF6A3))"
+format = "([\b \\[](fg:#070707 bg:#FFF6A3)([+$added ]($added_style))([-$deleted ]($deleted_style))[\b\\] ](fg:#070707 bg:#FFF6A3))"
 
 [git_status]
 style = "bg:#FFF6A3 fg:#070707"
 modified = "" # git_metrics shows us if we've modified files already
 deleted = "X" # default char is too curvy, replace with normal X
-format = '([ \[](bg:#FFF6A3 fg:#070707)[$all_status$ahead_behind]($style)[\] ](bg:#FFF6A3 fg:#070707))'
+format = "([\b \\[](bg:#FFF6A3 fg:#070707)[$all_status$ahead_behind]($style)[\\] ](bg:#FFF6A3 fg:#070707))"
 # Avoid slow git plugin with native Windows starship.rs
 # windows_starship = "/mnt/c/"
 
