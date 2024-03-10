@@ -3,101 +3,26 @@
 
 """ Plugins
 call plug#begin()
-Plug 'sheerun/vim-polyglot'
-Plug 'phanviet/vim-monokai-pro'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.1.*'}
+Plug 'lervag/vimtex'
+Plug 'loctvl842/monokai-pro.nvim'
+Plug 'preservim/nerdtree'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'preservim/nerdtree'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
 
 """ Settings
 """" Leader
 let mapleader = ' '
-
-"""" Plugins
-""" nerdtree
-noremap <leader>nt :NERDTree<CR>
+let maplocalleader = ' '
 
 
-""" vim-monokai-pro
-set termguicolors
-colorscheme monokai_pro
-hi Normal guibg=#222222
-hi WhiteSpace guifg=white guibg=#2b2b2b
-hi SpecialKey guibg=#222222
-hi NonText guibg=#222222
-hi EndOfBuffer guibg=#222222
-hi SignColumn guibg=#191919
-hi LineNr guibg=#191919 guifg=#43454a
-hi WinSeparator guibg=#222222 guifg=#222222
-hi MsgArea guibg=#191919
-
-" Comments are a mild fuschia
-hi Comment guifg=#b04fc6
-hi Comment guifg=#e234da
-set cursorline " Highlight current line
-hi CursorLine guibg=#2b2b2b
-
-""" vim-airline
-let g:airline_theme='badwolf'
-let g:airline_section_z = "%p%% \u2630 %l/%L \u33d1:%v"
-
-""" coc.nvim
-" Use <c-space> to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Make <CR> auto-select the first choice and notify coc.nvim to format on
-" enter
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use tab to trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? pumnext(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? pumprev(1) : "\<C-h>"
-
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
 """" Mouse, Keyboard, Terminal
 set mouse=nv                " Allow mouse use in normal and visual mode.
 set timeoutlen=2000         " Wait 2 seconds before timing out a mapping
@@ -160,7 +85,7 @@ set formatoptions+=1        " break before, not after, a 1 letter word
 set number                  " Display line numbers
 set relativenumber          " and relative line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
-set signcolumn=number       " and drawing signs in the number column
+set signcolumn=yes          " and drawing signs in the number column
 set display+=uhex           " Use <03> rather than ^C for non-printing chars
 set inccommand=nosplit      " Preview :s commands incrementally as you type
 
@@ -190,8 +115,6 @@ set expandtab               " Use spaces, not tabs, for autoindent/tab key.
 
 """" Tags
 set showfulltag             " Show more information while completing tags.
-set cscopetag               " When using :tag, <C-]>, or "vim -t", try cscope:
-set cscopetagorder=0        " try ":cscope find g foo" and then ":tselect foo"
 
 """" Reading/Writing
 set noautowrite             " Never write a file unless I request it.
@@ -217,43 +140,176 @@ filetype indent on          " use filetype-specific indenting where available,
 filetype plugin on          " also allow for filetype-specific plugins,
 syntax on                   " and turn on per-filetype syntax highlighting.
 
-""" Toggle Comment Command
-"let current_ft = &ft
-"noremap f
+autocmd FileType tex setlocal spell
 
+"""" Plugin Config
 
-"""" Colemak bindings
-" noremap f e
-" noremap F E
-" noremap p r
-" noremap P R
-" noremap g t
-" noremap G T
-" noremap j y
-" noremap J Y
-" noremap l u
-" noremap L U
-" noremap u i
-" noremap U I
-" noremap y o
-" noremap Y O
-" noremap ; p
-" noremap : P
-" noremap r s
-" noremap R S
-" noremap s d
-" noremap S D
-" noremap t f
-" noremap T F
-" noremap d g
-" noremap D G
-" noremap n j
-" noremap N J
-" noremap e k
-" noremap E K
-" noremap i l
-" noremap I L
-" noremap o ;
-" noremap O :
-" noremap k n
-" noremap K N
+nmap <localleader>v <plug>(vimtex-view)
+
+""" LuaSnip
+" Expand or jump in insert mode
+imap <silent><expr> jk luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : 'jk'
+
+" Jump forward through tabstops in visual mode
+smap <silent><expr> jk luasnip#jumpable(1) ? '<Plug>luasnip-jump-next' : 'jk'
+
+" Jump backward through snippet tabstops with Shift-Tab.
+imap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
+smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
+
+" For changing choices in choiceNodes (not strictly necessary for a basic setup).
+imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+
+lua <<EOF
+require("luasnip").config.set_config({ -- Setting LuaSnip config
+    -- Enable autotriggered snippets
+    enable_autosnippets = true,
+
+    -- Make stuff update as I type
+    update_events = 'TextChanged,TextChangedI',
+
+    -- Use Tab to trigger visual selection
+    store_selection_keys = "<Tab>",
+})
+
+-- Lazy-load snippets
+require("luasnip.loaders.from_lua").lazy_load({paths = "~/.config/nvim/LuaSnip/"})
+EOF
+
+""" nerdtree
+noremap <leader>nt :NERDTree<CR>
+
+""" vim-monokai-pro
+set termguicolors
+
+colorscheme monokai-pro
+hi Normal guibg=#222222
+hi WhiteSpace guifg=white guibg=#2b2b2b
+hi SpecialKey guibg=#222222
+hi NonText guibg=#222222
+hi EndOfBuffer guibg=#222222
+hi SignColumn guibg=#191919
+hi LineNr guibg=#191919 guifg=#43454a
+hi WinSeparator guibg=#222222 guifg=#222222
+hi MsgArea guibg=#191919
+
+" Comments are a mild fuschia
+""hi Comment guifg=#b04fc6
+hi Comment guifg=#e234da
+set cursorline " Highlight current line
+hi CursorLine guibg=#2b2b2b
+
+""" tree-sitter
+lua <<EOF
+require 'nvim-treesitter.configs'.setup {
+    ensure_installed = { "c", "lua", "vim", "python", "rust", "yaml" },
+    sync_install = false,
+    highlight = {
+        enable = true,
+        disable = function(lang, buf)
+            local max_filesize = 100 * 1024  -- 100KiB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
+        additional_vim_regex_highlighting = false
+    },
+    refactor = {
+        highlight_definitions = {
+            enable = true,
+            clear_on_cursor_move = true,
+        },
+        smart_rename = {
+            enable = true,
+            keymaps = {
+                smart_rename = "<leader>rn"
+            }
+        },
+        navigation = {
+            enable = true,
+            keymaps = {
+                goto_definition = "gd",
+                list_definitions = "gnD",
+                list_definitions_toc = "gO",
+                goto_next_usage = "<a-*>",
+                goto_previous_usage = "<a-#>",
+            }
+        }
+    }
+}
+EOF
+
+""" vim-airline
+let g:airline_theme='badwolf'
+" Alternative character, looks like 'ln' \u33d1
+let g:airline_section_z = "%p%% \u2630 %l/%L:%v"
+
+"""" coc.nvim
+"" Use <c-space> to trigger completion
+"inoremap <silent><expr> <c-space> coc#refresh()
+"
+"" Make <CR> auto-select the first choice and notify coc.nvim to format on
+"" enter
+"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"
+"" Use tab to trigger completion with characters ahead and navigate.
+"inoremap <silent><expr> <TAB>
+"      \ coc#pum#visible() ? coc#pum#next(1) :
+"      \ CheckBackspace() ? "\<Tab>" :
+"      \ coc#refresh()
+"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+"
+"function! CheckBackspace() abort
+"  let col = col('.') - 1
+"  return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
+"
+"" Use `[g` and `]g` to navigate diagnostics
+"" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+"nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"
+"" Use K to show documentation in preview window.
+"nnoremap <silent> K :call ShowDocumentation()<CR>
+"
+"function! ShowDocumentation()
+"  if CocAction('hasProvider', 'hover')
+"    call CocActionAsync('doHover')
+"  else
+"    call feedkeys('K', 'in')
+"  endif
+"endfunction
+"
+"" GoTo code navigation.
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
+"
+"" Run the Code Lens action on the current line.
+"nmap <leader>cl  <Plug>(coc-codelens-action)
+"
+"" Symbol renaming.
+"nmap <leader>rn <Plug>(coc-rename)
+"
+"" Highlight the symbol and its references when holding the cursor
+"autocmd CursorHold * silent call CocActionAsync('highlight')
+
+""" Ocaml
+" Add merlin to runtimepath
+" Requires ocaml-language-server to be installed:
+" `npm install -g ocaml-language-server`
+lua <<EOF
+local handle = io.popen("opam var share")
+local result = handle:read("*a"):gsub('[\n\r]', '')
+vim.g.opamshare = result
+vim.o.rtp = vim.o.rtp .. "," .. vim.g.opamshare .. "/merlin/vim"
+EOF
+set rtp^="~/.opam/5.1.1/share/ocp-indent/vim,"
+
+""" F#
+" Needs `dotnet tool install --global fsautocomplete`
+autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp
