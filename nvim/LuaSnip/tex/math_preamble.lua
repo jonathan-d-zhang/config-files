@@ -6,7 +6,8 @@ local fmta = require("luasnip.extras.fmt").fmta
 
 local conditions = require("luasnip.extras.expand_conditions")
 
-local preamble = [[\documentclass[12pt]{article}
+local preamble = [=[
+\documentclass[12pt]{article}
 
 % For importing graphics
 % \usepackage{graphicx}
@@ -20,7 +21,6 @@ local preamble = [[\documentclass[12pt]{article}
 
 %\usepackage{siunitx}
 %\DeclareSIUnit{\parsec}{pc}
-%\DeclareSIUnit{\arcsec}{as}
 %\DeclareSIUnit{\atmosphere}{atm}
 
 % colors
@@ -31,6 +31,28 @@ local preamble = [[\documentclass[12pt]{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{physics}
+\usepackage{mathtools}
+
+
+\usepackage[colorlinks,allcolors=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+% Augmented matrices. https://tex.stackexchange.com/a/2244
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+    \hskip -\arraycolsep
+    \let\@ifnextchar\new@ifnextchar
+    \array{#1}}
+\makeatother
+
+% Plurals
+\crefname{thm}{theorem}{theorems}
+\crefname{defn}{definition}{definitions}
+\crefname{lem}{lemma}{lemmas} % or 'lemmata'?
+\crefname{cor}{corollary}{corollaries}
+\crefname{conj}{conjecture}{conjectures}
+\crefname{prop}{proposition}{propositions}
 
 \renewcommand\qedsymbol{$\blacksquare$}
 
@@ -43,7 +65,8 @@ local preamble = [[\documentclass[12pt]{article}
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}[section]
 \newtheorem{exmp}{Example}[section]
-\newtheorem{exer}[exmp]{Exercise}
+\newtheorem{exer}{Exercise}
+\newtheorem{ques}{Question}
 
 \theoremstyle{remark}
 \newtheorem*{rem}{Remark}
@@ -60,13 +83,15 @@ local preamble = [[\documentclass[12pt]{article}
 % Makes delimiters always resizable.
 \newcommand{\pbound}[1]{\left( #1 \right)}
 \newcommand{\bbound}[1]{\left[ #1 \right]}
+\newcommand{\brbound}[1]{\left\{ #1 \right\}}
 
-% d/dx
-\newcommand{\dv}[1]{\frac{\textrm{d}}{\textrm{d} #1}}
+% Differential
+\newcommand{\diff}{\ensuremath{\operatorname{d}\!}}
 
 % vectors
-\newcommand{\ihat}{\boldsymbol{\hat{\textbf{\i}}}}
-\newcommand{\jhat}{\boldsymbol{\hat{\textbf{\j}}}}
+\newcommand{\ihat}{\boldsymbol{\hat{\imath}}}
+\newcommand{\jhat}{\boldsymbol{\hat{\jmath}}}
+\newcommand{\khat}{\boldsymbol{\hat{k}}}
 
 % mean
 \newcommand*\mean[1]{\bar{#1}}
@@ -87,6 +112,9 @@ local preamble = [[\documentclass[12pt]{article}
 % }
 % \myexternaldocument{}
 
+% Subfiles
+\usepackage{subfiles}
+
 \setlength{\parindent}{0pt}
 
 \counterwithin{figure}{section}
@@ -100,7 +128,7 @@ local preamble = [[\documentclass[12pt]{article}
 <>
 
 \end{document}
-]]
+]=]
 
 return {
 
@@ -114,3 +142,16 @@ s(
 )
 
 }
+--[[
+\usepackage{tikz}
+\usetikzlibrary{automata}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta, arrows}
+\tikzset{
+    ->,
+    >=stealth,
+    every edge/.style={draw},
+    bend angle=20,
+    initial text=$ $,
+}
+--]]

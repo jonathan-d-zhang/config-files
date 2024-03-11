@@ -39,41 +39,25 @@ local function in_math_and_not_text()
 end
 
 return {
--- Plus
--- "f" is under "r" which is "p" in Colemak for "Plus"
+-- Sum
+-- "dim" in Colemak for "SUM"
 s(
-    { trig="fk", snippetType="autosnippet", wordTrig=false },
-    t("+"),
-    { condition = in_math_and_not_text }
-),
--- Minus
--- "ni" in Colemak which is like "ni" for "MInus"
-s(
-    { trig="jl", snippetType="autosnippet", wordTrig=false },
-    t("-"),
+    { trig="dim", snippetType="autosnippet" },
+    fmta("\\sum_{<>}^{<>}", { i(1), i(2) }),
     { condition = in_math_and_not_text }
 ),
 
--- Times
--- "ti" in Colemak for "TImes"
+-- Limit
 s(
-    { trig="fl", snippetType="autosnippet", wordTrig=false },
-    t("\\times"),
-    { condition = in_math_and_not_text }
-),
-
--- Equals
--- "eq" in Colemak for "EQuals"
-s(
-    { trig="kq", snippetType="autosnippet", wordTrig=false },
-    t("="),
+    { trig="lim", snippetType="autosnippet" },
+    fmta("\\lim_{<>}", i(1)),
     { condition = in_math_and_not_text }
 ),
 
 -- Floor
 -- "flr" in Colemak for "FLooR"
 s(
-    { trig="eus", snippetType="autosnippet" },
+    { trig="eus" },
     fmta("\\left\\lfloor<>\\right\\rfloor", i(1)),
     { condition = in_math_and_not_text }
 ),
@@ -81,7 +65,7 @@ s(
 -- Ceil
 -- "cel" in Colemak for "CEiL"
 s(
-    { trig="cku", snippetType="autosnippet" },
+    { trig="cku" },
     fmta("\\left\\lceil<>\\right\\rceil", i(1)),
     { condition = in_math_and_not_text }
 ),
@@ -90,7 +74,15 @@ s(
 -- "DerivatiVe"
 s(
     { trig="dv", snippetType="autosnippet" },
-    fmta("\\dv{<>}", i(1)),
+    fmta("\\dv{<>}{<>}", { i(1), i(2) }),
+    { condition = in_math_and_not_text }
+),
+
+-- Partial Derivative
+-- "Partial DerivatiVe"
+s(
+    { trig="pdv", snippetType="autosnippet" },
+    fmta("\\pdv{<>}{<>}", { i(1), i(2) }),
     { condition = in_math_and_not_text }
 ),
 
@@ -141,10 +133,18 @@ s(
     { condition = in_math_and_not_text }
 ),
 -- Subscript
--- "su" in Colemak for "SUbscript"
+-- "sub" in Colemak for "SUbscript"
 s(
-    { trig="di", snippetType="autosnippet", wordTrig=false },
+    { trig="dib", snippetType="autosnippet", wordTrig=false },
     fmta("_{<>}", i(1)),
+    { condition = in_math_and_not_text }
+),
+
+-- Vec
+-- "vkc" in Colemak for "VEC"
+s(
+    { trig="vkc", snippetType="autosnippet", wordTrig=false },
+    fmta("\\vec{<>}", i(1)),
     { condition = in_math_and_not_text }
 ),
 

@@ -282,6 +282,22 @@ EOF
 "" Highlight the symbol and its references when holding the cursor
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
+=======
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 """ F#
 " Needs `dotnet tool install --global fsautocomplete`
 autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp

@@ -59,8 +59,6 @@ style = "bg:#FFF6A3 fg:#070707"
 modified = "" # git_metrics shows us if we've modified files already
 deleted = "X" # default char is too curvy, replace with normal X
 format = "([\b \\[](bg:#FFF6A3 fg:#070707)[$all_status$ahead_behind]($style)[\\] ](bg:#FFF6A3 fg:#070707))"
-# Avoid slow git plugin with native Windows starship.rs
-# windows_starship = "/mnt/c/"
 
 
 #### Environment

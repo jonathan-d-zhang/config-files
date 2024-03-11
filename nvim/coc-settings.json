@@ -1,11 +1,11 @@
 {
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
-  "inlayHint.enable": true,
-   "workspace.ignoredFolders": [
-        "$HOME",
-        "$HOME/.cargo/**",
-        "$HOME/.rustup/**"
-   ],
+    "inlayHint.enable": true,
+    "workspace.ignoredFolders": [
+         "$HOME",
+         "$HOME/.cargo/**",
+         "$HOME/.rustup/**"
+    ],
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.6/clangd_15.0.6/bin/clangd",
     "languageserver": {
       "haskell": {
        "command": "haskell-language-server-wrapper",

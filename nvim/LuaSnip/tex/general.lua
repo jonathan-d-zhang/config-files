@@ -15,9 +15,14 @@ local rep = require("luasnip.extras").rep
 local conditions = require("luasnip.extras.expand_conditions")
 
 local in_env = require("utils").in_env
+local in_mathzone = require("utils").in_mathzone
 
 local function in_list()
     return in_env('itemize') or in_env('enumerate')
+end
+
+local function in_list_and_not_math()
+    return in_list() and not in_mathzone()
 end
 
 return {
@@ -52,7 +57,7 @@ s(
 s(
     { trig="lf", snippetType="autosnippet" },
     t("\\item "),
-    { condition = in_list }
+    { condition = in_list_and_not_math }
 ),
 
 -- Environments
@@ -70,7 +75,7 @@ s(
 -- Format Example: Thursday, 20 October 22
 s(
     "date",
-    f(function() return os.date("%A, %d %b %y") end)
+    f(function() return os.date("%A, %d %b. %Y") end)
 ),
 
 -- Italics
