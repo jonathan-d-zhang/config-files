@@ -10,7 +10,9 @@ Plug 'lervag/vimtex'
 Plug 'loctvl842/monokai-pro.nvim'
 Plug 'preservim/nerdtree'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'neovim/nvim-lspconfig'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -22,6 +24,8 @@ call plug#end()
 let mapleader = ' '
 let maplocalleader = ' '
 
+"""" Python 3 Provider
+let g:python3_host_prog = '~/.pyenv/versions/nvim/bin/python'
 
 """" Mouse, Keyboard, Terminal
 set mouse=nv                " Allow mouse use in normal and visual mode.
@@ -216,28 +220,6 @@ require 'nvim-treesitter.configs'.setup {
         end,
         additional_vim_regex_highlighting = false
     },
-    refactor = {
-        highlight_definitions = {
-            enable = true,
-            clear_on_cursor_move = true,
-        },
-        smart_rename = {
-            enable = true,
-            keymaps = {
-                smart_rename = "<leader>rn"
-            }
-        },
-        navigation = {
-            enable = true,
-            keymaps = {
-                goto_definition = "gd",
-                list_definitions = "gnD",
-                list_definitions_toc = "gO",
-                goto_next_usage = "<a-*>",
-                goto_previous_usage = "<a-#>",
-            }
-        }
-    }
 }
 EOF
 
@@ -246,69 +228,59 @@ let g:airline_theme='badwolf'
 " Alternative character, looks like 'ln' \u33d1
 let g:airline_section_z = "%p%% \u2630 %l/%L:%v"
 
-"""" coc.nvim
-"" Use <c-space> to trigger completion
-"inoremap <silent><expr> <c-space> coc#refresh()
-"
-"" Make <CR> auto-select the first choice and notify coc.nvim to format on
-"" enter
-"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-"                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-"
-"" Use tab to trigger completion with characters ahead and navigate.
-"inoremap <silent><expr> <TAB>
-"      \ coc#pum#visible() ? coc#pum#next(1) :
-"      \ CheckBackspace() ? "\<Tab>" :
-"      \ coc#refresh()
-"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-"
-"function! CheckBackspace() abort
-"  let col = col('.') - 1
-"  return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-"
-"" Use `[g` and `]g` to navigate diagnostics
-"" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-"nmap <silent> [g <Plug>(coc-diagnostic-prev)
-"nmap <silent> ]g <Plug>(coc-diagnostic-next)
-"
-"" Use K to show documentation in preview window.
-"nnoremap <silent> K :call ShowDocumentation()<CR>
-"
-"function! ShowDocumentation()
-"  if CocAction('hasProvider', 'hover')
-"    call CocActionAsync('doHover')
-"  else
-"    call feedkeys('K', 'in')
-"  endif
-"endfunction
-"
-"" GoTo code navigation.
-"nmap <silent> gd <Plug>(coc-definition)
-"nmap <silent> gy <Plug>(coc-type-definition)
-"nmap <silent> gi <Plug>(coc-implementation)
-"nmap <silent> gr <Plug>(coc-references)
-"
-"" Run the Code Lens action on the current line.
-"nmap <leader>cl  <Plug>(coc-codelens-action)
-"
-"" Symbol renaming.
-"nmap <leader>rn <Plug>(coc-rename)
-"
+"""" nvim-lspconfig
+" Start COQ at startup
+let g:coq_settings = { 'auto_start': v:true }
+
+lua <<EOF
+-- Use `[g` and `]g` to navigate diagnostics
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[g', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']g', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+-- Language Servers
+local lsp = require "lspconfig"
+local coq = require "coq"
+
+lsp.pyright.setup {}
+lsp.rust_analyzer.setup {}
+lsp.ocamllsp.setup {}
+
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+--    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+--    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+--    vim.keymap.set('n', '<leader>wl', function()
+--      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+--    end, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+EOF
+
 "" Highlight the symbol and its references when holding the cursor
 "autocmd CursorHold * silent call CocActionAsync('highlight')
-
-""" Ocaml
-" Add merlin to runtimepath
-" Requires ocaml-language-server to be installed:
-" `npm install -g ocaml-language-server`
-lua <<EOF
-local handle = io.popen("opam var share")
-local result = handle:read("*a"):gsub('[\n\r]', '')
-vim.g.opamshare = result
-vim.o.rtp = vim.o.rtp .. "," .. vim.g.opamshare .. "/merlin/vim"
-EOF
-set rtp^="~/.opam/5.1.1/share/ocp-indent/vim,"
 
 """ F#
 " Needs `dotnet tool install --global fsautocomplete`
