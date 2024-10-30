@@ -16,6 +16,7 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'kiyoon/jupynium.nvim', { 'do': 'pip3 install --user .' }
 call plug#end()
 
 
@@ -144,9 +145,27 @@ filetype indent on          " use filetype-specific indenting where available,
 filetype plugin on          " also allow for filetype-specific plugins,
 syntax on                   " and turn on per-filetype syntax highlighting.
 
+""" Tex
 autocmd FileType tex setlocal spell
 
+""" F#
+" Needs `dotnet tool install --global fsautocomplete`
+autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp
+
 """" Plugin Config
+""" vimtex
+let g:vimtex_quickfix_open_on_warning = 0 " Don't warn me about warnings
+let g:vimtex_view_method = "zathura"
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-pdf',
+    \   '-shell-escape',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}
 
 nmap <localleader>v <plug>(vimtex-view)
 
@@ -282,7 +301,7 @@ EOF
 "" Highlight the symbol and its references when holding the cursor
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
-=======
+
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -298,6 +317,3 @@ nmap <leader>rn <Plug>(coc-rename)
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-""" F#
-" Needs `dotnet tool install --global fsautocomplete`
-autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp

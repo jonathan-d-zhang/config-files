@@ -39,6 +39,26 @@ local function in_math_and_not_text()
 end
 
 return {
+-- Comparisons
+-- \leq
+s(
+    { trig="<=", snippetType="autosnippet" },
+    t("\\leq"),
+    { condition = in_mathzone }
+),
+-- \geq
+s(
+    { trig=">=", snippetType="autosnippet" },
+    t("\\geq"),
+    { condition = in_mathzone }
+),
+-- \neq
+s(
+    { trig="!=", snippetType="autosnippet" },
+    t("\\neq"),
+    { condition = in_mathzone }
+),
+
 -- Sum
 -- "dim" in Colemak for "SUM"
 s(
@@ -126,16 +146,14 @@ s(
 ),
 
 -- Superscript
--- "to" in Colemak for "raise TO power"
 s(
-    { trig="f;", snippetType="autosnippet", wordTrig=false },
+    { trig="^", snippetType="autosnippet", wordTrig=false },
     fmta("^{<>}", i(1)),
     { condition = in_math_and_not_text }
 ),
 -- Subscript
--- "sub" in Colemak for "SUbscript"
 s(
-    { trig="dib", snippetType="autosnippet", wordTrig=false },
+    { trig="_", snippetType="autosnippet", wordTrig=false },
     fmta("_{<>}", i(1)),
     { condition = in_math_and_not_text }
 ),

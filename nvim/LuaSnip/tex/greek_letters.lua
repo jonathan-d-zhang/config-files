@@ -72,4 +72,24 @@ s(
     { condition = in_mathzone }
 ),
 
+-- \varepsilon
+s(
+    { trig="kk"},
+    t("\\varepsilon"),
+    { condition = in_mathzone }
+),
+
+-- Omega
+s(
+    { trig=";O", snippetType="autosnippet" },
+    t("\\Omega"),
+    { condition = in_mathzone }
+),
+
+-- omega
+s(
+    { trig=";o", snippetType="autosnippet" },
+    t("\\varepsilon"),
+    { condition = in_mathzone }
+),
 }

@@ -9,6 +9,11 @@ local conditions = require("luasnip.extras.expand_conditions")
 local preamble = [=[
 \documentclass[12pt]{article}
 
+% Subfiles
+\usepackage{subfiles}
+
+\usepackage{parskip}
+
 % For importing graphics
 % \usepackage{graphicx}
 % \graphicspath{{images/}}
@@ -18,6 +23,11 @@ local preamble = [=[
 
 %\usepackage{longtable}
 %\usepackage{booktabs}
+
+% Code Listings
+\usepackage{listings}
+
+\usepackage{parskip}
 
 %\usepackage{siunitx}
 %\DeclareSIUnit{\parsec}{pc}
@@ -33,7 +43,6 @@ local preamble = [=[
 \usepackage{amsthm}
 \usepackage{physics}
 \usepackage{mathtools}
-
 
 \usepackage[colorlinks,allcolors=blue]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
@@ -112,10 +121,6 @@ local preamble = [=[
 % }
 % \myexternaldocument{}
 
-% Subfiles
-\usepackage{subfiles}
-
-\setlength{\parindent}{0pt}
 
 \counterwithin{figure}{section}
 
