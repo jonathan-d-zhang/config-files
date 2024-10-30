@@ -1,0 +1,19 @@
+[user]
+name = "Jonathan Zhang"
+email = "69145546+jonathan-d-zhang@users.noreply.github.com"
+
+[ui]
+diff-editor = ":builtin"
+default-command = ["log"]
+
+[signing]
+sign-all = true
+backend = "gpg"
+key = "69145546+jonathan-d-zhang@users.noreply.github.com"
+
+[signing.backends.gpg]
+program = "gpg2"
+allow-expired-keys = false
+
+[template-aliases]
+'format_timestamp(timestamp)' = 'timestamp.ago()'
