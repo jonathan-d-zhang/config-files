@@ -16,12 +16,13 @@
 format = """\
 [\uE0B6](#F0A573)\
 $directory\
-$kubernetes\
 [\uE0B0](fg:#F0A573 bg:#FFF6A3)\
 $git_branch\
 $git_metrics\
 $git_status\
-[\uE0B0 ](fg:#FFF6A3)\
+[\uE0B0](fg:#FFF6A3 bg:#ABEDA1)\
+$kubernetes\
+[\uE0B0 ](fg:#ABEDA1)\
 """
 #[\uE0B0](fg:#C6F8E5 bg:#F0A573)\
 #$hostname\
@@ -80,7 +81,9 @@ truncation_symbol = "…/"
 symbol = ""
 
 [kubernetes]
-disabled = true
+disabled = false
+style = "bg:#ABEDA1"
+format = '[ $symbol $context ]($style fg:#070707)'
 
 [nix_shell]
 symbol = ""
