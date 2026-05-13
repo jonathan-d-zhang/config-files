@@ -1,1 +1,0 @@
-Set-PSReadLineOption -PredictionViewStyle ListView
