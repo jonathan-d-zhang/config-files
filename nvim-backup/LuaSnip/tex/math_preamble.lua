@@ -12,8 +12,6 @@ local preamble = [=[
 % Subfiles
 \usepackage{subfiles}
 
-\usepackage{parskip}
-
 % For importing graphics
 % \usepackage{graphicx}
 % \graphicspath{{images/}}

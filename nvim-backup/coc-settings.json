@@ -1,5 +1,5 @@
 {
-    "inlayHint.enable": true,
+    "inlayHint.enable": false,
     "workspace.ignoredFolders": [
          "$HOME",
          "$HOME/.cargo/**",
